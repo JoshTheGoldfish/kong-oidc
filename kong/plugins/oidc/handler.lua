@@ -27,6 +27,9 @@ end
 
 function handle(oidcConfig)
   local response
+
+  ngx.log(ngx.DEBUG, "Introspect endpoint is " .. oidcConfig.introspection_endpoint)
+
   if oidcConfig.introspection_endpoint then
     response = introspect(oidcConfig)
     if response then
@@ -43,7 +46,6 @@ function handle(oidcConfig)
 end
 
 function make_oidc(oidcConfig)
-  ngx.log(ngs.DEBUG, "TEST")
   ngx.log(ngx.DEBUG, "OidcHandler calling authenticate, requested path: " .. ngx.var.request_uri)
   local res, err = require("resty.openidc").authenticate(oidcConfig)
   if err then
