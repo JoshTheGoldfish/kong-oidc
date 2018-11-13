@@ -43,6 +43,7 @@ function handle(oidcConfig)
 end
 
 function make_oidc(oidcConfig)
+  ngx.log(ngs.DEBUG, "TEST")
   ngx.log(ngx.DEBUG, "OidcHandler calling authenticate, requested path: " .. ngx.var.request_uri)
   local res, err = require("resty.openidc").authenticate(oidcConfig)
   if err then
