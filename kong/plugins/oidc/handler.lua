@@ -63,6 +63,7 @@ function introspect(oidcConfig)
     ngx.log(ngx.DEBUG, "OidcHandler calling introspect at" .. oidcConfig.introspection_endpoint)
     local res, err = require("resty.openidc").introspect(oidcConfig)
     if err then
+      ngx.log(ngx.DEBUG, "Error when calling introspect endpoint. Error is: " .. err)
       if oidcConfig.bearer_only == "yes" then
         ngx.header["WWW-Authenticate"] = 'Bearer realm="' .. oidcConfig.realm .. '",error="' .. err .. '"'
         utils.exit(ngx.HTTP_UNAUTHORIZED, err, ngx.HTTP_UNAUTHORIZED)
