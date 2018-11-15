@@ -28,8 +28,6 @@ end
 function handle(oidcConfig)
   local response
 
-  ngx.log(ngx.DEBUG, "Introspect endpoint is " .. oidcConfig.introspection_endpoint)
-
   if oidcConfig.introspection_endpoint then
     response = introspect(oidcConfig)
     if response then
@@ -61,7 +59,6 @@ end
 function introspect(oidcConfig)
   if utils.has_bearer_access_token() or oidcConfig.bearer_only == "yes" then
     ngx.log(ngx.DEBUG, "OidcHandler calling introspect at " .. oidcConfig.introspection_endpoint)
-    ngx.log(ngx.DEBUG, "Token type hint is " .. oidcConfig.token_type_hint)
     local res, err = require("resty.openidc").introspect(oidcConfig)
     if err then
       ngx.log(ngx.DEBUG, "Error when calling introspect endpoint. Error is: " .. err)
